@@ -146,7 +146,7 @@ footer .mono{font-family:"JetBrains Mono",monospace}
 <div class="e"><b>crs(r, describe=TRUE)</b> <span>— coordinate reference system</span></div>
 <div class="e"><b>names(r) &lt;- c("a","b")</b> <span>— layer names; also</span> <b>varnames()</b>, <b>units()</b>, <b>time()</b></div>
 <div class="e"><b>minmax(r)</b> <span>— min/max per layer (</span><b>setMinMax(r)</b> <span>to compute)</span></div>
-<div class="e"><b>summary(r)</b>, <b>unique(r)</b>, <b>freq(r)</b> <span>— value counts</span></div>
+<div class="e"><b>summary(r)</b> <span>— summary statistics</span>, <b>unique(r)</b> <span>— unique values</span>, <b>freq(r)</b> <span>— frequency table</span></div>
 <div class="e"><b>inMemory(r); sources(r)</b> <span>— in RAM or on disk?</span></div>
 <div class="e"><b>datatype(r)</b> <span>— on-disk data type (e.g. INT2S, FLT4S)</span></div>
 <div class="e"><b>head(r)</b>; <b>tail(r)</b> <span>— peek at values</span></div>
@@ -423,7 +423,7 @@ footer .mono{font-family:"JetBrains Mono",monospace}
 <div class="e"><b>agitate(pts)</b> <span>— jitter overlapping points</span></div>
 <div class="e"><b>snapTo(pts, lns)</b> <span>— snap points onto the nearest line / edge</span></div>
 <div class="e"><b>dots(polys, "pop", size=1000)</b> <span>— dot-density map: one dot per 1000</span></div>
-<div class="e"><b>cartogram(polys, "pop", "nc")</b> <span>— area of the polygons is proportional to the variable; also "circles"</span></div>
+<div class="e"><b>cartogram(polys, "pop", type="nc")</b> <span>— area of the polygons is proportional to the variable; also "circles"</span></div>
 <div class="e"><b>spatSample(polys, 100, "random")</b> <span>— random points in polygons</span></div>
 <div class="e"><b>furdist(v1, v2)</b> <span>— distance to the furthest location</span></div>
 <div class="e"><b>n &lt;- netw(lns)</b>; <b>shortestPath(n, from, to)</b> <span>— network routing</span></div>
