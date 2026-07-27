@@ -150,7 +150,7 @@ footer .mono{font-family:"JetBrains Mono",monospace}
 <div class="e"><b>inMemory(r); sources(r)</b> <span>— in RAM or on disk?</span></div>
 <div class="e"><b>datatype(r)</b> <span>— on-disk data type (e.g. INT2S, FLT4S)</span></div>
 <div class="e"><b>head(r)</b>; <b>tail(r)</b> <span>— peek at values</span></div>
-<div class="e"><b>compareGeom(r1, r2)</b> <span>— same extent / res / crs?</span></div>
+<div class="e"><b>compareGeom(r1, r2)</b> <span>— same extent / resolution / crs?</span></div>
 </div>
 </section>
 
@@ -271,7 +271,8 @@ footer .mono{font-family:"JetBrains Mono",monospace}
 <div class="e"><b>freq(r)</b>; <b>crosstab(c(r, s))</b> <span>— (cross-)tabulate counts</span></div>
 <div class="e"><b>expanse(r, unit="km")</b> <span>— area of non-NA cells;</span> <b>cellSize(r)</b> <span>— cell-area raster (geodesic-aware)</span></div>
 <div class="e"><b>layerCor(r, "cor")</b> <span>— between-layer correlation</span></div>
-<div class="e"><b>quantile(r)</b>; <b>autocor(r)</b> <span>— Moran's I</span></div>
+<div class="e"><b>quantile(r)</b> <span>— quantiles across the layers</span></div>
+<div class="e"><b>autocor(r)</b> <span>— spatial autocorrelation (Moran's I, Geary's C)</span></div>
 </div>
 </section>
 
@@ -330,7 +331,7 @@ footer .mono{font-family:"JetBrains Mono",monospace}
 <section class="v">
 <h2>Create &amp; read</h2>
 <div class="bd">
-<div class="e"><b>v &lt;- vect("parcels.gpkg")</b> <span>— any GDAL/OGR source (.shp, .gpkg, GeoJSON, PostGIS, …)</span></div>
+<div class="e"><b>v &lt;- vect("parcels.gpkg")</b> <span>— read any GDAL/OGR source (.shp, .gpkg, GeoJSON, PostGIS, …)</span></div>
 <div class="e"><b>vect("f.gpkg", query="SELECT … WHERE …", extent=e)</b> <span>— partial read;</span> <b>proxy=TRUE</b> <span>reads no geometries yet</span></div>
 <div class="e"><b>vect(cbind(x, y), atts=df, crs="EPSG:4326")</b> <span>— points from coords</span></div>
 <div class="e"><b>vect("POLYGON ((0 0, 5 0, 5 5, 0 0))")</b> <span>— from WKT</span></div>
@@ -357,7 +358,7 @@ footer .mono{font-family:"JetBrains Mono",monospace}
 <div class="bd">
 <div class="e"><b>geom(v)</b> <span>— vertices matrix;</span> <b>crds(v)</b> <span>— coordinates</span></div>
 <div class="e"><b>geomtype(v)</b>; <b>is.points(v)</b>, <b>is.lines(v)</b>, <b>is.polygons(v)</b></div>
-<div class="e"><b>nrow(v)</b> <span>— n geometries;</span> <b>nseg(v)</b> <span>— n segments</span></div>
+<div class="e"><b>nrow(v)</b> <span>— number of geometries;</span> <b>nseg(v)</b> <span>— number of segments</span></div>
 <div class="e"><b>expanse(v, unit="km")</b> <span>— polygon area (geodesic for lon/lat)</span></div>
 <div class="e"><b>perim(v)</b> <span>— perimeter / line length</span></div>
 <div class="e"><b>is.valid(v)</b>; <b>makeValid(v)</b> <span>— check / repair geometries</span></div>
@@ -371,7 +372,7 @@ footer .mono{font-family:"JetBrains Mono",monospace}
 <div class="e"><b>buffer(v, width=100)</b> <span>— geodesic-aware buffer (m for lon/lat)</span></div>
 <div class="e"><b>centroids(v, inside=TRUE)</b> <span>— point guaranteed inside</span></div>
 <div class="e"><b>hull(v, "convex")</b> <span>— also "rectangle", "circle", "concave_ratio"</span></div>
-<div class="e"><b>voronoi(v)</b>; <b>delaunay(v)</b></div>
+<div class="e"><b>voronoi(v)</b>; <b>delaunay(v)</b> <span>— Voronoi diagram; Delaunay triangulation</span></div>
 <div class="e"><b>simplifyGeom(v, tolerance=.01)</b> <span>— fewer nodes;</span> <b>densify(v, 100)</b> <span>— more</span></div>
 <div class="e"><b>fillHoles(v)</b>; <b>gaps(v)</b> <span>— holes &amp; slivers between polygons</span></div>
 <div class="e"><b>disagg(v)</b> <span>— multipart → single parts;</span> <b>aggregate(v, "region")</b> <span>— dissolve by attribute</span></div>
@@ -422,7 +423,7 @@ footer .mono{font-family:"JetBrains Mono",monospace}
 <div class="e"><b>agitate(pts)</b> <span>— jitter overlapping points</span></div>
 <div class="e"><b>snapTo(pts, lns)</b> <span>— snap points onto the nearest line / edge</span></div>
 <div class="e"><b>dots(polys, "pop", size=1000)</b> <span>— dot-density map: one dot per 1000</span></div>
-<div class="e"><b>cartogram(polys, "pop", "nc")</b> <span>— area ∝ variable; also "circles"</span></div>
+<div class="e"><b>cartogram(polys, "pop", "nc")</b> <span>— area of the polygons is proportional to the variable; also "circles"</span></div>
 <div class="e"><b>spatSample(polys, 100, "random")</b> <span>— random points in polygons</span></div>
 <div class="e"><b>furdist(v1, v2)</b> <span>— distance to the furthest location</span></div>
 <div class="e"><b>n &lt;- netw(lns)</b>; <b>shortestPath(n, from, to)</b> <span>— network routing</span></div>
@@ -441,7 +442,7 @@ footer .mono{font-family:"JetBrains Mono",monospace}
 </section>
 
 <section class="b">
-<h2>Raster ↔ vector</h2>
+<h2>Raster-vector interactions</h2>
 <div class="bd">
 <div class="e"><b>extract(r, pts)</b> <span>— values at points, one column per layer;</span> <b>bind=TRUE</b> <span>returns SpatVector</span></div>
 <div class="e"><b>extract(r, polys, fun=mean, na.rm=TRUE)</b> <span>— summarize per polygon;</span> <b>exact=TRUE</b> <span>weights by cover fraction</span></div>
@@ -461,18 +462,18 @@ footer .mono{font-family:"JetBrains Mono",monospace}
 <div class="e"><b>interpIDW(r, pts, "z", radius=1e4)</b> <span>— inverse-distance weighted</span></div>
 <div class="e"><b>interpNear(r, pts, "z")</b> <span>— nearest-neighbor interpolation</span></div>
 <div class="e"><b>interpolate(r, model)</b> <span>— any spatial model with predict (kriging via gstat, thin-plate splines via fields::Tps, …)</span></div>
-<div class="e"><b>predict(r, model)</b> <span>— glm / randomForest / … ; layer names must match the model's predictor names</span></div>
-<div class="e"><b>k_means(r, centers=5)</b>; <b>prcomp(r)</b> <span>— clustering, PCA</span></div>
+<div class="e"><b>predict(r, model)</b> <span>— glm, randomForest, and more (layer names must match the model's predictor names)</span></div>
+<div class="e"><b>k_means(r, centers=5)</b>; <b>prcomp(r)</b> <span>— clustering; principal component analysis (PCA)</span></div>
 </div>
 </section>
 
 <section class="m">
 <h2>Plotting</h2>
 <div class="bd">
-<div class="e"><b>plot(r)</b> <span>— map;</span> <b>col=map.pal("viridis")</b>, <b>breaks=</b>, <b>range=</b>, <b>legend=</b></div>
+<div class="e"><b>plot(r)</b> <span>— map (arguments: col=map.pal("viridis"), breaks=, range=, legend=)</span></div>
 <div class="e"><b>plot(r, type="interval")</b> <span>— or "classes", "continuous"</span></div>
 <div class="e"><b>plot(v, "pop", type="interval")</b> <span>— choropleth</span></div>
-<div class="e"><b>plotRGB(r, 3, 2, 1, stretch="lin")</b> <span>— satellite composite</span></div>
+<div class="e"><b>plotRGB(r, 3, 2, 1, stretch="lin")</b> <span>— three-channel composition (satellite imagery)</span></div>
 <div class="e"><b>lines(v); points(v); polys(v); text(v, "name"); halo(x, y, "lab")</b> <span>— add to map</span></div>
 <div class="e"><b>sbar(50, "bottomright"); north()</b> <span>— scale bar, north arrow</span></div>
 <div class="e"><b>panel(r)</b> <span>— multi-layer panel, shared legend;</span> <b>inset()</b></div>
@@ -520,7 +521,7 @@ footer .mono{font-family:"JetBrains Mono",monospace}
 <div class="bd">
 <div class="e"><b>gdal()</b> <span>— GDAL version;</span> <b>gdal(drivers=TRUE)</b> <span>— supported formats</span></div>
 <div class="e"><b>describe("f.tif")</b>; <b>vector_layers("f.gpkg")</b> <span>— what's in a file?</span></div>
-<div class="e"><b>setGDALconfig("GDAL_PAM_ENABLED", "FALSE")</b> <span>— e.g. no .aux.xml files</span></div>
+<div class="e"><b>setGDALconfig("GDAL_PAM_ENABLED", "FALSE")</b> <span>— change GDAL options (e.g. no .aux.xml files)</span></div>
 <div class="e"><b>gdalCache(2000)</b> <span>— GDAL cache size (MB)</span></div>
 <div class="e"><b>libVersion("proj")</b> <span>— GDAL / PROJ / GEOS versions</span></div>
 </div>
@@ -539,7 +540,7 @@ footer .mono{font-family:"JetBrains Mono",monospace}
 <section class="m">
 <h2>Interactive (on a plotted map)</h2>
 <div class="bd">
-<div class="e"><b>click(r)</b> <span>— query values by clicking;</span> <b>click(v)</b></div>
+<div class="e"><b>click()</b> <span>— query values by clicking</div>
 <div class="e"><b>draw("polygon")</b> <span>— digitize a polygon, line, extent or points</span></div>
 <div class="e"><b>zoom(r)</b> <span>— zoom to a drawn extent;</span> <b>sel(v)</b> <span>— select by drawing</span></div>
 </div>
